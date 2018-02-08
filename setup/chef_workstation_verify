@@ -1,0 +1,24 @@
+#!/bin/bash 
+
+
+echo "############# START verifying workstation setup ############"
+
+# bug in headless mode for chef-verify
+# https://github.com/chef/chef-dk/issues/928
+TERM=xterm-256color
+
+chef verify 
+
+knife ssl check
+
+# path to rubocop and rspec
+source /etc/profile
+ 
+chef      --version
+ohai      --version 
+foodcritic --version
+rubocop   --version
+rspec     --version
+
+echo "############# STOP verifying workstation setup (no errors?) ############"
+

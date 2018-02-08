@@ -1,0 +1,6 @@
+# entries for chef test/learn play vagrant hosts
+192.168.56.2 chefserver01
+192.168.56.3 chefworkstation01 
+192.168.56.4 cheftest01 
+192.168.56.5 cheftest02
+

@@ -1,0 +1,25 @@
+#!/bin/bash 
+
+V_SETUP_DIR=/vagrant/setup/
+V_HOME=/home/vagrant/
+
+# PURPOSE: do vagrant setup common to all hosts in this project
+
+# below also needs to be in individal server and workstation host provision 
+cat $V_SETUP_DIR/etc_hosts_additions  >> /etc/hosts
+
+chown vagrant:vagrant $V_HOME/ -R
+
+echo setting up guest to guest ssh
+mkdir -p $V_HOME/.ssh 
+cp $V_SETUP_DIR/ssh_config $V_HOME/.ssh/config
+if  [ -r $V_SETUP_DIR/insecure_private_key ]
+then
+   cp $V_SETUP_DIR/insecure_private_key $V_HOME/.ssh/id_rsa
+else
+   echo WARN $V_SETUP_DIR/insecure_private_key not found
+   echo WARN guest to guest ssh may be effected
+fi
+
+
+chown vagrant.vagrant $V_HOME/.ssh -R

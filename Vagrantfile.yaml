@@ -1,0 +1,81 @@
+# VagrantFile.yml
+#
+# PURPOSE: define  vagrant parametrs in conscise yaml instead of verbose ruby  
+
+# * `memory`:   RAM in Megabytes for the virtual machine
+
+# * `ip`:       The ip address you want. 
+#                             
+#               Be sure to also edit setup/etc_hosts_additions.
+                           
+
+# * `shell_scripts_on_create`:   a list of shell scripts to  run on
+#                                'vagrant provision' or first 'vagrant up'
+#                                 (creation) after a 'vagrant destory'
+#
+#                                  'path:' (required) is path to script
+#                                          to run (relative to the 
+#                                           VagrantFile)
+
+
+# * `shell_scripts_always`:       a list of shell scripts to  run on
+#                                 **EVERY** 'vagrant up' or 
+#                                 'vagrant reload' 
+#
+#                                  'path:' (required) is path to script
+#                                          to run (relative to the 
+#                                           VagrantFile)
+
+
+# * `synced_folders`:   A list of dicts that specify synced folders.
+#                       `src` and `dest` are mandatory, `options:` are 
+#                       optional. For the possible options, see the 
+#                       Vagrant documentation[1]. 
+#
+#                       Keys of options should be prefixed with
+#                       a colon, e.g. `:owner:`.
+#
+---
+- 
+  name: chefserver01
+  ip: 192.168.56.2
+  memory: 2048
+  shell_scripts_on_create:
+    - path: setup/chef_server_provision
+    - path: setup/chef_common_provision
+  shell_scripts_always:
+    - path: setup/apt_update_upgrade
+- 
+  name: chefworkstation01
+  ip: 192.168.56.3
+  memory: 1024
+  shell_scripts_on_create:
+    - path: setup/chef_workstation_provision
+    - path: setup/chef_common_provision
+  shell_scripts_always:
+    - path: setup/apt_update_upgrade
+  synced_folders:
+    - src: chef-repo
+      dest: /home/vagrant/chef-repo
+      options:
+        :create: false
+        :owner: vagrant
+        :group: vagrant
+        :mount_options: ['dmode=0755', 'fmode=0644']
+- 
+  name: cheftest01
+  ip: 192.168.56.4
+  memory: 512
+  shell_scripts_on_create:
+    - path: setup/chef_common_provision
+  shell_scripts_always:
+    - path: setup/apt_update_upgrade
+- 
+  name: cheftest02
+  ip: 192.168.56.5
+  memory: 512
+  shell_scripts_on_create:
+    - path: setup/chef_common_provision
+  shell_scripts_always:
+    - path: setup/apt_update_upgrade
+

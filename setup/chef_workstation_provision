@@ -1,0 +1,39 @@
+#!/bin/bash 
+
+V_SETUP_DIR=/vagrant/setup/
+V_HOME=/home/vagrant/
+CHEF_REPO_DIR=$V_HOME/chef-repo/
+
+cat $V_SETUP_DIR/etc_hosts_additions  >> /etc/hosts
+ls $V_SETUP_DIR/etc_hosts_additions 
+
+dpkg -i $V_SETUP_DIR/chefdk*.deb
+
+chef shell-init bash > /tmp/chef_shell_init.sh
+cat /tmp/chef_shell_init.sh >> /etc/bash.bashrc
+cat /tmp/chef_shell_init.sh >> /etc/profile
+
+if [ -f $CHEF_REPO_DIR/README.md ]
+then
+  echo "$CHEF_REPO_DIR already setup, not running chef generate "
+else
+  # echo "############## creating $CHEF_REPO_DIR ###########"s
+  chef generate repo $V_HOME/chef-repo
+fi
+
+# silence unset git vars WARN that are fatal for chef verify 
+cp $V_SETUP_DIR/gitconfig_for_vagrant_user_home $V_HOME/.gitconfig 
+
+echo ####### making .chef/
+mkdir -p $V_HOME/.chef/trusted_certs 
+
+cp $V_SETUP_DIR/*.pem $V_HOME/.chef/
+cp $V_SETUP_DIR/knife.rb $V_HOME/.chef/
+
+# provisioning in chef-sever01 to place file here for 
+# this script to copy it
+cp $V_SETUP_DIR/*.crt .chef/trusted_certs/
+
+chef-apply -e "package 'git'"
+chown vagrant.vagrant $V_HOME/ -R
+su vagrant -c $V_SETUP_DIR/chef_workstation_verify 

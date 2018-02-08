@@ -1,0 +1,21 @@
+#!/bin/bash 
+
+cat /vagrant/setup/etc_hosts_additions  >> /etc/hosts
+
+dpkg -i /vagrant/setup/chef*server*.deb
+chef-server-ctl reconfigure
+
+chef-server-ctl install chef-manage 
+chef-server-ctl reconfigure
+chef-manage-ctl reconfigure  --accept-license  
+
+chef-server-ctl user-create admin admin user admin@example.com admin1234 --filename /vagrant/setup/admin.pem
+chef-server-ctl org-create           \
+  acme                               \
+  "Acme Chef Test Organization"      \
+  --association_user admin           \
+  --filename /vagrant/setup/acme-org-validator.pem
+
+# needs to be here so  chef_workstation01 provisioning script can copy it         
+cp /var/opt/opscode/nginx/ca/*.crt /vagrant/setup/
+
