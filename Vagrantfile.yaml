@@ -41,19 +41,21 @@
   ip: 192.168.56.2
   memory: 2048
   shell_scripts_on_create:
+    - path: setup/chef_common_provision_pre
     - path: setup/chef_server_provision
-    - path: setup/chef_common_provision
+    - path: setup/chef_common_provision_post
   shell_scripts_always:
     - path: setup/apt_update_upgrade
 - 
   name: chefworkstation01
   ip: 192.168.56.3
   memory: 1024
-  shell_scripts_on_create:
-    - path: setup/chef_workstation_provision
-    - path: setup/chef_common_provision
   shell_scripts_always:
     - path: setup/apt_update_upgrade
+  shell_scripts_on_create:
+    - path: setup/chef_common_provision_pre
+    - path: setup/chef_workstation_provision
+    - path: setup/chef_common_provision_post
   synced_folders:
     - src: chef-repo
       dest: /home/vagrant/chef-repo
@@ -66,16 +68,17 @@
   name: cheftest01
   ip: 192.168.56.4
   memory: 512
-  shell_scripts_on_create:
-    - path: setup/chef_common_provision
   shell_scripts_always:
     - path: setup/apt_update_upgrade
+  shell_scripts_on_create:
+    - path: setup/chef_common_provision_pre
+    - path: setup/chef_common_provision_post
 - 
   name: cheftest02
   ip: 192.168.56.5
   memory: 512
-  shell_scripts_on_create:
-    - path: setup/chef_common_provision
   shell_scripts_always:
     - path: setup/apt_update_upgrade
-
+  shell_scripts_on_create:
+    - path: setup/chef_common_provision_pre
+    - path: setup/chef_common_provision_post
