@@ -1,16 +1,18 @@
-# PURPOSE: 
-
+﻿# PURPOSE: 
 Do as little work as possible to create a vagrant testing/learning setup
 for chef version 12 with a chef server, chef workstation and 2 test
-boxes running Ubuntu 16.04 LTS linux.
+boxes running Ubuntu 16.04 LTS Linux.
 
+# LICENSE
+GPLv3 , probably a bit grand for such a small project, but there it is.
+ 
 # AUTHOR
 Dan MacNeil <dan@omacneil.org>
 
 # FEATURES
 1. Get going in 20-55 minutes
 1. Connect to the chef server from a HOST OS web browser
-1. ssh from one vagrant machne to another without password
+1. ssh from one vagrant machine to another without password
 1. Everything ready go for knife bootstrap 
 1. Chef config is outside the vagrant boxes. You can blow away Vagrant 
    and keep your work/play/tests
@@ -21,13 +23,13 @@ Dan MacNeil <dan@omacneil.org>
 1. Six cores of CPU to devote to vagrant/virtual box 
 1. Four Gig of RAM to devote to vagrant/virtual box
 1. virtualbox , vagrant and git
-1. A debian/ubuntu linux host OS ( probably optional, see POTENTIAL ISSUES) 
+1. A Debian/Ubuntu Linux. host OS ( probably optional, see POTENTIAL ISSUES) 
 
 You might get by with < 2G RAM on the chef server and <  1G RAM on the 
 chef workstation.  However chef server and chef workstation fail to 
 start processes with 1 G of RAM and 512M of RAM
 
-You could edit VagrantFile.yml to disable cheftest01 and cheftest02 to
+You could edit VagrantFile.yaml to disable cheftest01 and cheftest02 to
 save 1 G of RAM and 2 cores
 
 # IMPORTANT WARNING
@@ -36,8 +38,8 @@ example, the same insecure ssh key is used everywhere for everything
 
 # tldr; SETUP SUMMARY
 1. install vagrant, virtual box and git on your workstation 
-1. git pull these setup files from github
-1. download .deb files for chefserver and chef dev kit for ubuntu 16.04 
+1. git pull these setup files from GitHub
+1. download .deb files for chef server and chef dev kit for Ubuntu 16.04 
 1. vagrant up
 1. update /etc/hosts on Host OS
 1. wait about 20 minutes on modern hardware
@@ -51,11 +53,15 @@ example, the same insecure ssh key is used everywhere for everything
 ```shell
   sudo apt install vagrant git virtualbox 
 ```
-## git pull these setup files from github                               
+## git pull these setup files from GitHub                               
+```shell
+  cd <your vagrant directory>
+  git clone https://github.com/omacneil/chef12-vagrant.git chef12
+```
 
-## download .deb files for chefserver and chef dev kit for ubuntu 16.04 
+## download .deb files for chef server and chef dev kit for Ubuntu 16.04 
 You will have to register with the chef corporation. For the 
-chef server installation packge goto (1) for the chef development kit to 
+chef server installation package goto (1) for the chef development kit to 
 be installed on the chef workstation goto (2)
  
 1. https://downloads.chef.io/chef-server
@@ -119,7 +125,7 @@ to WARN with:
 ```
 ## ==> chefworkstation01: ERROR: Network Error: getaddrinfo: Name or service not known
 We `knife ssl verify` from `chef_workstation_verify` . If we haven't got
-/etc/hosts set at this point (and this shouldn't happen!), you schould run 
+/etc/hosts set at this point (and this shouldn't happen!), you should run 
 `knife ssl verify` by hand on chefworkstation01 to be sure all is ok.  
 
 ## ==> chefworkstation01: <SNIP> aws_route53_record_set.rb:48: warning: constant ::Fixnum is deprecated
@@ -132,13 +138,13 @@ everything is setup correctly. If it breaks something, it will break
 it on a install that has none of our work saved. Please ignore this
  message. 
 
-## Provisioning is not reentrant
+## Provisioning is not re-entrant
 You will get errors and undefined results if you run `vagrant provision`
-2 times in a row. Don't do that. Run `vagrant destory` then `vagrant up`
+2 times in a row. Don't do that. Run `vagrant destroy` then `vagrant up`
 
-## Very aggressive about ubuntu package updates
+## Very aggressive about Ubuntu package updates
 Every time we bring a vagrant guest box up, we check for and apply Ubuntu
-package updates. If you fear change, delay and incompatibiliy more than
+package updates. If you fear change, delay and incompatibility more than
 you fear security problems and love bug fixes, edit `Vagrantfile.yaml` 
 to disable `setup/apt_update_upgrade`
 
@@ -156,8 +162,8 @@ should be fine, but if not here's what's known to work:
 *NOTE:* There were relatively large changes from chef 11 to chef 12
 
 *NOTE:* Using other flavors of Linux and MacOS for a host OS should 
-should also work,  but your milage will vary. We'd welcome pull 
-requests to improve documentation or usibility. 
+should also work,  but your mileage will vary. We'd welcome pull 
+requests to improve documentation or usability. 
 
 ## chef bootstrap takes what chef.io gives us for chef-client 
 Again, this should be fine.  If there are problems many people
@@ -171,9 +177,9 @@ If you are using 192.168.56.[1-5] someplace else, you will be sad.
 Every time the vagrant guests start we append entries to /etc/hosts. 
 We do not automatically edit /etc/hosts
 
-If you change ip addresses for existing hosts or add ip addresses 
+If you change IP addresses for existing hosts or add IP addresses 
 for new hosts:
-1. edit setup/etc_hosts_additiions on the Host OS
+1. edit setup/etc_hosts_additions on the Host OS
 1. /etc/hosts on the Host OS 
 1. do a `vagrant destroy` and `vagrant up` to pass the changes to the 
    guests
@@ -197,7 +203,7 @@ generate repo` and chef seems to respect existing files. However, if
 there are bugs, your changes will be overwritten. 
 
 *NOTE:* Be careful messing with .gitignore as that keeps the git repo 
-in chef-repo seperate from the one in the parent directory 
+in chef-repo separate from the one in the parent directory 
 
 ## possible ssh issues 
 We copy $HOME/.vagrant.d/insecure_private_key on the Host OS to 
