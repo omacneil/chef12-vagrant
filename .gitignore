@@ -1,6 +1,6 @@
 # seperate git repo when we set it up
 # empty dir with README.md when we don't
-chef-repo
+chef-repo/*
 !chef-repo/README.md
 
 *.log
