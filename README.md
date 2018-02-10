@@ -138,6 +138,30 @@ everything is setup correctly. If it breaks something, it will break
 it on a install that has none of our work saved. Please ignore this
  message. 
 
+## ERROR loader: Unknown config sources: [
+This error seems to come up after moving or renaming the directory 
+containing your Vagrantfile  or messing with vagrant plugins. It is 
+just a warning. However you can make it go away by removing invalid 
+cached vagrant boxes and disabling or removing plugins which also 
+include configuration. 
+
+```shell
+  # requires you re-install your plugins
+  vagrant plugin expunge
+  
+  # missing boxes get re-downloaded and rebuilt. 
+  rm -rf ~/.vagrant.d/boxes/
+```
+Info about where vagrant looks for config sources is here: 
+https://www.vagrantup.com/docs/vagrantfile/#load-order
+
+## Provisioning hangs with bad or missing internet connnection
+Maybe (?) the chef-manage plugin for chef server reaches out
+to the chef corporation when it is being initalized for the
+first time. 
+
+Try to have a working internet connection. 
+
 ## Provisioning is not re-entrant
 You will get errors and undefined results if you run `vagrant provision`
 2 times in a row. Don't do that. Run `vagrant destroy` then `vagrant up`
