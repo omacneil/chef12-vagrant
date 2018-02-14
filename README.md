@@ -85,7 +85,7 @@ You don't have to wait for vagrant to finish grinding up the guest boxes
     cat /etc/hosts
       
     # if not add them
-    sudo su -c "cat chef_server_setup/etc_hosts_additions  >> /etc/hosts"
+    sudo su -c "cat setup/etc_hosts_additions  >> /etc/hosts"
 ```
 ## start using your chef setup                                          
 ### web interface
