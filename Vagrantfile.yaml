@@ -63,7 +63,7 @@
         :create: false
         :owner: vagrant
         :group: vagrant
-        :mount_options: ['dmode=0755', 'fmode=0644']
+        :mount_options: ['dmode=0755', 'fmode=0774']
 - 
   name: cheftest01
   ip: 192.168.56.4
