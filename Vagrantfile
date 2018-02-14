@@ -4,7 +4,7 @@ YAML_CONFIG_FILE        = 'Vagrantfile.yaml'
 
 # This is a generic Vagrantfile that can be used without modification in
 # a variety of situations. Hosts and their properties are specified in
-# Vagrantfile.yml .
+# Vagrantfile.yaml .
 #
 # based on:
 #             https://github.com/bertvv/ansible-skeleton/ 
