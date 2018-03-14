@@ -87,6 +87,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       node.vm.provider :virtualbox do |vb|
         vb.customize ["modifyvm", :id, "--memory", host['memory'] ||=1024 ]
+	# limit VM to 50% of host CPU at all times, so desktop is responsive/ uncrashed
+  	vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
       end
 
     if host.has_key?('shell_scripts_always')
