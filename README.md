@@ -60,12 +60,10 @@ example, the same insecure ssh key is used everywhere for everything
 ```
 
 ## download .deb files for chef server and chef dev kit for Ubuntu 16.04 
-You will have to register with the chef corporation. For the 
-chef server installation package goto (1) for the chef development kit to 
-be installed on the chef workstation goto (2)
- 
-1. https://downloads.chef.io/chef-server
-1. https://downloads.chef.io/chefd
+Get the chef server and chef development kit ubuntu 16.04 .deb files
+from https://downloads.chef.io/
+
+You will have to register with the chef corporation to get chef server package. 
 
 Place the (2) .deb files you downloaded in the `setup/` directory 
 
