@@ -101,7 +101,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if host.has_key?('shell_scripts_on_create')
           scripts=host['shell_scripts_on_create']
           scripts.each do |script|
-            node.vm.provision "shell", path: script['path'], name: script['path'], run: 'always'
+            # when :run not specified , default is to run only once on vm creation 
+            node.vm.provision "shell", path: script['path'], name: script['path']
           end
     end
 
