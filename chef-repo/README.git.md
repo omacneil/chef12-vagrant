@@ -17,4 +17,6 @@ be a different git repository that you
 use to keep track of your chef test/play/learning
 
 The goal of the parent project is quickly get a 
-basic chef setup created, using it is outside of  
+basic chef setup created.
+
+Using your basic chef setup is outside the scope of the parent project. 
